@@ -304,5 +304,14 @@ sudo sed -i "/^$1,/d" /var/www/html/an/sakaguchi/test.csv
 ```
 
 #### なにがやばいのか
+```bash
+$1=,/d" /data; sudo rm -fr /tmp; # を渡せば
+# これになる
+sudo sed -i "/^,/d" /data; sudo rm -fr /tmp; # /var/www/html/an/sakaguchi/test.csv
+# /tmpいかが全て削除される。
+```
 
 #### 対策（今日の復習）
+* phpのSplFileObjectを使えばそもそもシェル呼び出しをする必要もない
+* そもそもtest.csvをdocument root上に置く必要は全くない
+* apacheの権限をsudo ALLにしない
