@@ -210,6 +210,11 @@ system('/usr/sbin/sendmail <tmplate.txt ' . escapeshellarg($mail));
 escapeshellcmdでも脆弱性が混入する可能性はある。
 以下の対策で考える。
 
+
+escapechellcmd攻撃実例[https://blog.tokumaru.org/2011/01/escapeshellcmd-dangerous-usage.html#p01]
+escapechellcmd解説[https://blog.tokumaru.org/2011/01/php-escapeshellcmd-is-dangerous.html]
+
+
 ### 参考：OSコマンドに渡すパラメータをシェルの環境変数経由で渡す
 
 ```bash
