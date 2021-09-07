@@ -266,51 +266,6 @@ OSの脆弱性をついた攻撃（local exploit）をされると、被害が�
 
 パッチ適用しよう。
 
-### おまけ（身近に潜む脆弱性）
-
-
-#### ここにヤバそうなコードがあります
-昔仕事（！）で納品したコードがリポジトリにあったので、あさってみた。
-
-```php
-// $wordはPOSTされた値そのまま
-function delete_word_from_dic($word)
-{
-    // 辞書ファイルから特定の文字列を含む行を削除
-    execute( BASE_PATH . "inc/scripts/deleteWordFromDic.sh ".$word, true);
-}
-```
-
-```php
-// exec関数のラッパー
-function execute ($cmd, $captureStrerr = false)
-{
-    $output = array();
-    $return = 0;
-    if ($captureStrerr === true) {
-        $cmd .= ' 2>&1';
-    }
-
-    exec($cmd, $output, $return);
-    //$output = implode('\n', $output);
-
-    return array('output' => $output, 'return' => $return);
-}
-```
-
-```bash
-#!/bin/sh
-sudo sed -i "/^$1,/d" /var/www/html/an/sakaguchi/test.csv
-```
-
-#### なにがやばいのか
-```bash
-$1=,/d" /data; sudo rm -fr /tmp; # を渡せば
-# これになる
-sudo sed -i "/^,/d" /data; sudo rm -fr /tmp; # /var/www/html/an/sakaguchi/test.csv
-# /tmpいかが全て削除される。
-```
-
 #### 対策（今日の復習）
 * phpのSplFileObjectを使えばそもそもシェル呼び出しをする必要もない
 * そもそもtest.csvをdocument root上に置く必要は全くない
